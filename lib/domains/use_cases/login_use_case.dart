@@ -1,0 +1,34 @@
+import 'package:either_dart/either.dart';
+import 'package:equatable/equatable.dart';
+
+import '../../../core/errors/failures.dart';
+import '../../../core/usecase/usecase.dart';
+import '../entities/user_entity.dart';
+import '../repositories/auth_repository.dart';
+
+
+// We implement our generic UseCase
+class LoginUseCase implements UseCase<UserEntity, LoginParams> {
+  final AuthRepository authRepository;
+
+  LoginUseCase(this.authRepository);
+
+  @override
+  Future<Either<Failure, UserEntity>> call(LoginParams params) async {
+    return await authRepository.login(
+      email: params.email,
+      password: params.password,
+    );
+  }
+}
+
+// We create a simple class to hold the parameters for this use case
+class LoginParams extends Equatable {
+  final String email;
+  final String password;
+
+  const LoginParams({required this.email, required this.password});
+
+  @override
+  List<Object?> get props => [email, password];
+}

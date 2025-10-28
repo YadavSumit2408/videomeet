@@ -19,6 +19,7 @@ dependencies:
 
   # Value Equality (for entities)
   equatable: ^2.0.5
+  either_dart: ^0.1.0
   
   # Offline Caching (we'll need this for Task 3)
   shared_preferences: ^2.2.1
