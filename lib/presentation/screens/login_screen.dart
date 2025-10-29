@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../presentation/providers/login_provider.dart';
+import '../providers/login_provider.dart';
 import '../screens/user_list_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -11,8 +11,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _emailController = TextEditingController(text: 'vijaybhuva90@gmail.com');
-  final _passwordController = TextEditingController(text: '123456');
+  // CORRECT ReqRes API credentials
+  final _emailController = TextEditingController(text: 'eve.holt@reqres.in');
+  final _passwordController = TextEditingController(text: 'cityslicka');
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -28,11 +29,22 @@ class _LoginScreenState extends State<LoginScreen> {
     final provider = context.read<LoginProvider>();
     await provider.login(_emailController.text, _passwordController.text);
 
-    if (provider.state == LoginState.success && mounted) {
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(builder: (_) => const UserListScreen()),
-      // );
+    if (!mounted) return;
+
+    if (provider.state == LoginState.success) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const UserListScreen()),
+      );
+    } else if (provider.state == LoginState.error) {
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(provider.errorMessage),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 4),
+        ),
+      );
     }
   }
 
@@ -42,10 +54,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF4F4F4),
-      resizeToAvoidBottomInset: true, // ✅ Ensures keyboard doesn't shrink layout
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(), // ✅ Tap outside to dismiss keyboard
+          onTap: () => FocusScope.of(context).unfocus(),
           child: LayoutBuilder(
             builder: (context, constraints) {
               return SingleChildScrollView(
@@ -129,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: _emailController,
               decoration: const InputDecoration(
                 labelText: 'Email',
-                hintText: 'vijaybhuva90@gmail.com',
+                hintText: 'eve.holt@reqres.in',
               ),
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
@@ -160,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
             const Text.rich(
               TextSpan(
-                text: "Don’t have any account? ",
+                text: "Don't have any account? ",
                 style: TextStyle(color: Colors.black54),
                 children: [
                   TextSpan(
