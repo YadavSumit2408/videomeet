@@ -25,6 +25,8 @@ dependencies:
   # Offline Caching (we'll need this for Task 3)
   shared_preferences: ^2.2.1
   http: ^0.13.6
+  agora_uikit: ^1.3.3       # This version depends on permission_handler ^10.x
+  permission_handler: ^10.4.3  # This version is compatible with Dart 2.19
 
 dev_dependencies:
   flutter_test:

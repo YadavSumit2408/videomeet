@@ -1,29 +1,40 @@
 import 'package:dio/dio.dart';
 import 'package:videomeet/core/errors/exception.dart';
- // Make sure this path is correct
 
 class ApiService {
-  // 1. DO NOT initialize Dio here.
   final Dio dio;
   final String _baseUrl = 'https://reqres.in/api';
 
-  // 2. Get the Dio instance from the constructor.
-  // This is the Dio that has our token interceptor.
   ApiService(this.dio);
 
   Future<List<dynamic>> getUsers() async {
     try {
-      // 3. Use the 'dio' field (which came from the constructor).
-      final response = await dio.get('$_baseUrl/users?page=1');
+      List<dynamic> allUsers = [];
       
-      if (response.statusCode == 200) {
-        // The list of users is inside the 'data' key
-        return response.data['data'] as List<dynamic>;
-      } else {
-        throw ServerException('Failed to load users: ${response.statusCode}');
+      // Fetch page 1 (6 users)
+      final response1 = await dio.get(
+        '$_baseUrl/users?page=1',
+        options: Options(
+          headers: {'Authorization': null}, // Remove auth header
+        ),
+      );
+      if (response1.statusCode == 200) {
+        allUsers.addAll(response1.data['data'] as List<dynamic>);
       }
+      
+      // Fetch page 2 (6 more users = 12 total)
+      final response2 = await dio.get(
+        '$_baseUrl/users?page=2',
+        options: Options(
+          headers: {'Authorization': null}, // Remove auth header
+        ),
+      );
+      if (response2.statusCode == 200) {
+        allUsers.addAll(response2.data['data'] as List<dynamic>);
+      }
+      
+      return allUsers;
     } on DioException catch (e) {
-      // Handle 401 error specifically for better debugging
       if (e.response?.statusCode == 401) {
         throw ServerException('Unauthorized. Token may be invalid or expired.');
       }

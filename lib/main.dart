@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => di.getIt<UserListProvider>()),
       ],
       child: MaterialApp(
-        title: 'Video Call App',
+        title: 'VideoMeet',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           scaffoldBackgroundColor: const Color(0xFFF4F4F4),
