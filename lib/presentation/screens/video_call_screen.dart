@@ -13,7 +13,6 @@ class VideoCallScreen extends StatefulWidget {
 }
 
 class _VideoCallScreenState extends State<VideoCallScreen> {
-  // --- NEW: This stores the position of your floating video ---
   Offset _floatingVideoPosition = const Offset(16, 40);
 
   @override
@@ -79,7 +78,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     );
   }
 
-  // --- NEW: Helper widget to build the local video (or "Camera Off") view ---
+  
   Widget _buildLocalVideoView(VideoCallProvider provider) {
     if (provider.isVideoDisabled) {
       // "Camera Off" UI
@@ -113,7 +112,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     );
   }
 
-  // --- UPDATED: This logic is now much better ---
+
   Widget _buildVideoGrid(VideoCallProvider provider) {
     // 1. Screen Sharing (No change, this is good)
     if (provider.isScreenSharing) {
@@ -168,10 +167,6 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
       // Show local video fullscreen
       return _buildLocalVideoView(provider);
     }
-
-    // 3. Normal Call - 1-on-1 or group (WhatsApp style)
-    // Main view is the remote user
-    // Floating view is the local user
     return Stack(
       children: [
         // Fullscreen Remote User (the first one)
@@ -190,7 +185,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
           left: _floatingVideoPosition.dx,
           top: _floatingVideoPosition.dy,
           child: Draggable(
-            feedback: SizedBox( // This is the widget being dragged
+            feedback: SizedBox( 
               width: 120,
               height: 160,
               child: ClipRRect(
@@ -198,24 +193,24 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                 child: _buildLocalVideoView(provider),
               ),
             ),
-            childWhenDragging: Container(), // Leave an empty space
+            childWhenDragging: Container(), 
             onDragEnd: (details) {
-              // Update the position, but keep it on screen
+            
               final size = MediaQuery.of(context).size;
               setState(() {
                 double newDx = details.offset.dx;
                 double newDy = details.offset.dy;
 
-                // Clamp to screen boundaries
+             
                 if (newDx < 0) newDx = 0;
                 if (newDx > size.width - 120) newDx = size.width - 120;
-                if (newDy < 40) newDy = 40; // Respect status bar area
+                if (newDy < 40) newDy = 40; // 
                 if (newDy > size.height - 160) newDy = size.height - 160;
 
                 _floatingVideoPosition = Offset(newDx, newDy);
               });
             },
-            child: SafeArea( // This is the widget at rest
+            child: SafeArea(
               child: SizedBox(
                 width: 120,
                 height: 160,
@@ -228,10 +223,10 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
           ),
         ),
         
-        // (Optional: Show other remote users as thumbnails at the bottom)
+       
         if (remoteUserUids.length > 1)
           Positioned(
-            bottom: 120, // Just above controls
+            bottom: 120, 
             left: 0,
             right: 0,
             height: 100,
@@ -239,7 +234,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
               scrollDirection: Axis.horizontal,
               itemCount: remoteUserUids.length - 1,
               itemBuilder: (context, index) {
-                final uid = remoteUserUids[index + 1]; // The *other* remote users
+                final uid = remoteUserUids[index + 1]; 
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4.0),
                   child: ClipRRect(
@@ -298,7 +293,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
             backgroundColor: provider.isVideoDisabled ? Colors.red : Colors.white24,
           ),
 
-          // Switch Camera Button (only when not screen sharing)
+        
           if (!provider.isScreenSharing)
             _buildControlButton(
               icon: Icons.flip_camera_ios,
