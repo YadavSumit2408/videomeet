@@ -6,8 +6,6 @@ import 'package:videomeet/presentation/providers/user_list_provider.dart';
 import 'package:videomeet/presentation/providers/video_call_provider.dart';
 import 'package:videomeet/presentation/screens/splash_screen.dart';
 
-// Your main() function might be async if you did setup here
-// We've moved all setup to the SplashScreen
 void main() {
   runApp(const MyApp());
 }

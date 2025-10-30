@@ -27,6 +27,8 @@ class _UserListScreenState extends State<UserListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Users'),
+        backgroundColor: Colors.black,
+        centerTitle: true,
       ),
       body: Consumer<UserListProvider>(
         builder: (context, provider, child) {

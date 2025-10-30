@@ -9,7 +9,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # State Management
   provider: ^6.1.2
 
   # Service Locator (for dependency injection)
@@ -22,7 +21,7 @@ dependencies:
   either_dart: ^0.1.0
   connectivity_plus: ^4.0.2
   
-  # Offline Caching (we'll need this for Task 3)
+  # Offline Caching
   shared_preferences: ^2.2.1
   http: ^0.13.6
 
