@@ -6,7 +6,7 @@ import '../../core/usecase/usecase.dart';
 import '../entities/user_entity.dart';
 import '../repositories/auth_repository.dart';
 
-// We implement our generic UseCase
+
 class LoginUseCase implements UseCase<UserEntity, LoginParams> {
   final AuthRepository authRepository;
 
@@ -21,7 +21,7 @@ class LoginUseCase implements UseCase<UserEntity, LoginParams> {
   }
 }
 
-// We create a simple class to hold the parameters for this use case
+
 class LoginParams extends Equatable {
   final String email;
   final String password;

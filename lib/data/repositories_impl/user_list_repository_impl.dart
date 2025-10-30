@@ -22,14 +22,14 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<Either<Failure, List<UserEntity>>> getUsers() async {
     if (await networkInfo.isConnected) {
-      // --- ONLINE ---
+     
       try {
         final remoteUsers = await apiService.getUsers();
         final userModels = remoteUsers
             .map((user) => UserModel.fromJson(user as Map<String, dynamic>))
             .toList();
 
-        // ✅ Cache the fetched users as JSON list
+        // Cache the fetched users as JSON list
         final usersJson =
             userModels.map((user) => (user as UserModel).toJson()).toList();
         await cacheService.cacheUsers(usersJson);
@@ -39,7 +39,6 @@ class UserRepositoryImpl implements UserRepository {
         return Left(ServerFailure(e.message));
       }
     } else {
-      // --- OFFLINE ---
       try {
         final cachedUsersJson = cacheService.getCachedUsers();
         if (cachedUsersJson == null) {

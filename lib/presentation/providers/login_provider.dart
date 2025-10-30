@@ -24,7 +24,6 @@ class LoginProvider extends ChangeNotifier {
     _errorMessage = '';
     notifyListeners();
 
-    // Call the use case with LoginParams
     final result = await loginUseCase(LoginParams(email: email, password: password));
 
     result.fold(

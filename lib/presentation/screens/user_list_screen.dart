@@ -27,7 +27,6 @@ class _UserListScreenState extends State<UserListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Users'),
-        // --- REMOVED: actions: [] (the video button) ---
       ),
       body: Consumer<UserListProvider>(
         builder: (context, provider, child) {

@@ -62,7 +62,7 @@ class VideoCallProvider extends ChangeNotifier {
     final engineResult = await _repository.setupEngine();
     if (engineResult.isLeft) {
       _errorMessage = engineResult.left.message;
-      _isLoading = false; // --- SET TO FALSE ON FAILURE ---
+      _isLoading = false; 
       notifyListeners();
       return false;
     }
@@ -75,12 +75,11 @@ class VideoCallProvider extends ChangeNotifier {
     final joinResult = await _repository.joinCall(_engine!, channelName);
     if (joinResult.isLeft) {
       _errorMessage = joinResult.left.message;
-      _isLoading = false; // --- SET TO FALSE ON FAILURE ---
+      _isLoading = false;
       notifyListeners();
       return false;
     }
 
-    // We no longer set isLoading = false here. We wait for the event.
     notifyListeners();
     return true;
   }
@@ -92,7 +91,7 @@ class VideoCallProvider extends ChangeNotifier {
           debugPrint('Local user ${connection.localUid} joined');
           _localUid = connection.localUid ?? 0;
           _isJoined = true;
-          _isLoading = false; // --- FIX: SET TO FALSE ON SUCCESS ---
+          _isLoading = false;
           notifyListeners();
         },
         onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
@@ -108,7 +107,7 @@ class VideoCallProvider extends ChangeNotifier {
         onError: (ErrorCodeType err, String msg) {
           debugPrint('Agora Error: [$err] $msg');
           _errorMessage = msg;
-          _isLoading = false; // --- FIX: SET TO FALSE ON ERROR ---
+          _isLoading = false; 
           _isJoined = false;
           notifyListeners();
         },

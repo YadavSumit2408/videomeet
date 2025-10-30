@@ -55,7 +55,7 @@ class VideoCallRepositoryImpl implements VideoCallRepository {
         options: const ChannelMediaOptions(
           publishCameraTrack: true,
           publishMicrophoneTrack: true,
-          publishScreenTrack: false, // Initially false
+          publishScreenTrack: false, 
           clientRoleType: ClientRoleType.clientRoleBroadcaster,
           autoSubscribeVideo: true,
           autoSubscribeAudio: true,

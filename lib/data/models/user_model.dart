@@ -1,5 +1,4 @@
 
-
 import '../../domains/entities/user_entity.dart';
 
 class UserModel extends UserEntity {
@@ -14,7 +13,7 @@ class UserModel extends UserEntity {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: json['id'].toString(), // ReqRes returns id as int, we cast to String
+      id: json['id'].toString(), 
       email: json['email'],
       firstName: json['first_name'],
       lastName: json['last_name'],
@@ -22,7 +21,7 @@ class UserModel extends UserEntity {
     );
   }
 
-  // We can also add a toJson if we ever need to send data *to* an API
+  
   Map<String, dynamic> toJson() {
     return {
       'id': id,

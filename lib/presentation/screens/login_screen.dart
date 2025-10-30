@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:videomeet/presentation/screens/home_screen.dart';
 import '../providers/login_provider.dart';
 import '../screens/user_list_screen.dart';
 
@@ -33,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (provider.state == LoginState.success) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const UserListScreen()),
+        MaterialPageRoute(builder: (_) => const MainNavigationScreen()),
       );
     } else if (provider.state == LoginState.error) {
       ScaffoldMessenger.of(context).showSnackBar(

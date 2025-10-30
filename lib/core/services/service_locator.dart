@@ -17,33 +17,33 @@ import '../../presentation/providers/user_list_provider.dart';
 import '../../domains/repositories/video_call_repository.dart';
 import '../../presentation/providers/video_call_provider.dart';
 
-
 final getIt = GetIt.instance;
 
 Future<void> init(SharedPreferences prefs) async {
   // --- Presentation (Providers) ---
   getIt.registerFactory(() => LoginProvider(loginUseCase: getIt()));
   getIt.registerFactory(() => UserListProvider(getUsersUseCase: getIt()));
-  // ADD THIS (Note: We pass the repo directly now)
+ 
   getIt.registerFactory(() => VideoCallProvider(videoCallRepository: getIt()));
 
   // --- Domain (Use Cases) ---
   getIt.registerLazySingleton(() => LoginUseCase(getIt()));
   getIt.registerLazySingleton(() => GetUsersUseCase(getIt()));
-  // We removed the old video use cases
+ 
 
   // --- Data (Repositories) ---
   getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
-        cacheService: getIt(), 
+        cacheService: getIt(),
       ));
-      
+
   getIt.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(
         apiService: getIt(),
         cacheService: getIt(),
         networkInfo: getIt(),
       ));
 
-  getIt.registerLazySingleton<VideoCallRepository>(() => VideoCallRepositoryImpl());
+  getIt.registerLazySingleton<VideoCallRepository>(
+      () => VideoCallRepositoryImpl());
 
   // --- Data (Services) ---
   getIt.registerLazySingleton<ApiService>(() => ApiService(getIt()));
@@ -53,22 +53,26 @@ Future<void> init(SharedPreferences prefs) async {
   // --- External ---
   getIt.registerLazySingleton(() => prefs);
   getIt.registerLazySingleton(() => Connectivity());
- getIt.registerLazySingleton(() {
+  getIt.registerLazySingleton(() {
     final dio = Dio(BaseOptions(
-      baseUrl: 'https://reqres.in/api', 
+      baseUrl: 'https://reqres.in/api',
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
     ));
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
-        if (options.path.contains('/login')) {
+        if (options.path.contains('/login') ||
+            options.path.contains('/users')) {
           return handler.next(options);
         }
+
         final cacheService = getIt<CacheService>();
         final token = await cacheService.getToken();
-        if (token != null) {
+
+        if (token != null && token.isNotEmpty) {
           options.headers['Authorization'] = 'Bearer $token';
         }
+
         return handler.next(options);
       },
       onError: (error, handler) async {

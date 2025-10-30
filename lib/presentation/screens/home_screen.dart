@@ -17,8 +17,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
   static const List<Widget> _pages = <Widget>[
-    HomeScreen(),    // Your new Home Screen
-    UserListScreen(), // Your existing User List Screen
+    HomeScreen(),    
+    UserListScreen(), 
   ];
 
   void _onItemTapped(int index) {
