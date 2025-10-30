@@ -146,7 +146,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('Video Meet Home'),
+        backgroundColor: Colors.black,
+      centerTitle: true,
       ),
       body: Center(
         child: Column(
