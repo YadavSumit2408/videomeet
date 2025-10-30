@@ -10,7 +10,7 @@ The app is built using a clean architecture (Repository Pattern) and manages sta
 
 
 
-## ✨ Features
+##  Features
 
 * **User Authentication:** Full login flow using a real API (`reqres.in`).
 * **Persistent Session:** Auth token is saved locally using `shared_preferences`.
@@ -25,7 +25,7 @@ The app is built using a clean architecture (Repository Pattern) and manages sta
 * **Screen Sharing:** (Android only at the moment).
 * **Error Handling:** App gracefully handles loading states and API errors.
 
-## 🚀 Tech Stack & Architecture
+##  Tech Stack & Architecture
 
 * **Framework:** Flutter & Dart
 * **Architecture:** Repository Pattern
@@ -35,6 +35,24 @@ The app is built using a clean architecture (Repository Pattern) and manages sta
 * **Networking:** `Dio` (for handling all API requests)
 * **Local Storage:** `shared_preferences`
 
-### 📂 Project Structure
 
-The project follows a clean, scalable folder structure:
+
+## 🛠️ Setup and Installation
+
+To get this project running on your local machine, follow these steps:
+
+### 1. Clone the Repository
+
+```sh
+git clone [https://github.com/YadavSumit2408/videomeet]
+
+```sh
+flutter pub get
+
+```sh
+flutter run
+
+
+## Links
+This Link container
+https://drive.google.com/drive/folders/1fBPEASYjOCqmIXtMp9KaJEDzXU_cTfLI

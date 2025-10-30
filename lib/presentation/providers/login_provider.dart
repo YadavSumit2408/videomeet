@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/errors/failures.dart';
 import '../../domains/entities/user_entity.dart';
+import '../../domains/repositories/auth_repository.dart'; // Import this
 import '../../domains/use_cases/login_use_case.dart';
 
 enum LoginState { initial, loading, success, error }
@@ -24,6 +25,7 @@ class LoginProvider extends ChangeNotifier {
     _errorMessage = '';
     notifyListeners();
 
+    // Call the use case with LoginParams
     final result = await loginUseCase(LoginParams(email: email, password: password));
 
     result.fold(
