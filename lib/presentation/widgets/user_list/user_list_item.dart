@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:videomeet/domains/entities/user_entity.dart';
-import '../../screens/video_call_screen.dart';
 
 
 class UserListItem extends StatelessWidget {
