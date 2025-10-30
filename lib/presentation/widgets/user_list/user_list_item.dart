@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:videomeet/domains/entities/user_entity.dart';
+import '../../screens/video_call_screen.dart';
 
 
 class UserListItem extends StatelessWidget {
@@ -8,7 +9,6 @@ class UserListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // We use a Container to mimic the style of our theme's text fields
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -30,10 +30,8 @@ class UserListItem extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: Text(user.email),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-        onTap: () {
-          // TODO: In the future, this could start a video call
-        },
+        
+       
       ),
     );
   }

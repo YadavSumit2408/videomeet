@@ -11,7 +11,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // CORRECT ReqRes API credentials
   final _emailController = TextEditingController(text: 'eve.holt@reqres.in');
   final _passwordController = TextEditingController(text: 'cityslicka');
   final _formKey = GlobalKey<FormState>();
@@ -37,7 +36,6 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(builder: (_) => const UserListScreen()),
       );
     } else if (provider.state == LoginState.error) {
-      // Show error message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(provider.errorMessage),

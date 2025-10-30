@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import '../providers/user_list_provider.dart';
 import '../widgets/user_list/user_list_item.dart';
 
+// --- NO MORE VIDEO IMPORTS NEEDED ---
+
 class UserListScreen extends StatefulWidget {
   const UserListScreen({super.key});
 
@@ -11,11 +13,10 @@ class UserListScreen extends StatefulWidget {
 }
 
 class _UserListScreenState extends State<UserListScreen> {
+
   @override
   void initState() {
     super.initState();
-    // Fetch users as soon as the screen loads
-    // Use addPostFrameCallback to ensure context is available
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<UserListProvider>().fetchUsers();
     });
@@ -26,6 +27,7 @@ class _UserListScreenState extends State<UserListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Users'),
+        // --- REMOVED: actions: [] (the video button) ---
       ),
       body: Consumer<UserListProvider>(
         builder: (context, provider, child) {

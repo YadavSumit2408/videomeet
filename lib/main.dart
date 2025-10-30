@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:videomeet/presentation/screens/home_screen.dart';
 import 'presentation/providers/login_provider.dart';
 import 'presentation/providers/user_list_provider.dart';
 import 'presentation/screens/login_screen.dart';
-import 'presentation/screens/user_list_screen.dart';
 import 'core/services/service_locator.dart' as di;
 import 'data/services/locals/cache_service.dart';
+import 'presentation/providers/video_call_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
   final prefs = await SharedPreferences.getInstance();
   await di.init(prefs);
-  
   runApp(const MyApp());
 }
 
@@ -25,7 +24,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => di.getIt<LoginProvider>()),
-        ChangeNotifierProvider(create: (context) => di.getIt<UserListProvider>()),
+        ChangeNotifierProvider(
+            create: (context) => di.getIt<UserListProvider>()),
+        ChangeNotifierProvider(
+            create: (context) => di.getIt<VideoCallProvider>()),
       ],
       child: MaterialApp(
         title: 'VideoMeet',
@@ -60,7 +62,8 @@ class MyApp extends StatelessWidget {
             hintStyle: const TextStyle(color: Colors.grey, fontSize: 14),
             filled: true,
             fillColor: Colors.white,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: const BorderSide(color: Colors.black12),
@@ -94,6 +97,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        // Your AuthCheckScreen is perfect
         home: const AuthCheckScreen(),
       ),
     );
@@ -117,15 +121,17 @@ class _AuthCheckScreenState extends State<AuthCheckScreen> {
   Future<void> _checkAuthStatus() async {
     final cacheService = di.getIt<CacheService>();
     final token = await cacheService.getToken();
-    
+
     await Future.delayed(const Duration(milliseconds: 500));
-    
+
     if (!mounted) return;
-    
+
     if (token != null && token.isNotEmpty) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const UserListScreen()),
+        MaterialPageRoute(
+          builder: (context) => const MainNavigationScreen(),
+        ),
       );
     } else {
       Navigator.pushReplacement(
@@ -137,7 +143,7 @@ class _AuthCheckScreenState extends State<AuthCheckScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: const Color(0xFFF4F4F4),
       body: Center(
         child: Column(
